@@ -11,7 +11,7 @@ from telegram.ext import (
 )
 
 # ─── CONFIG ───────────────────────────────────────────────
-BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"  # Replace with your token from @BotFather
+BOT_TOKEN = os.environ.get("BOT_TOKEN")  # Replace with your token from @BotFather
 
 # ─── HELPERS ──────────────────────────────────────────────
 
