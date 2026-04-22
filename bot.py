@@ -1,3 +1,5 @@
+import aiohttp
+import time
 import os
 import socket
 import requests
@@ -10,6 +12,18 @@ import ssl as ssl_lib
 from datetime import datetime, timezone
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
+# 🔥 cooldown system
+user_cooldowns = {}
+
+def is_spamming(user_id):
+    now = time.time()
+
+    if user_id in user_cooldowns:
+        if now - user_cooldowns[user_id] < 3:
+            return True
+
+    user_cooldowns[user_id] = now
+    return False
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
@@ -97,8 +111,9 @@ async def ip_lookup(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"🔍 Investigating `{ip}`...", parse_mode="Markdown")
 
     try:
-        r = requests.get(f"https://ipapi.co/{ip}/json/", timeout=10)
-        d = r.json()
+        async with aiohttp.ClientSession() as session:
+    async with session.get(f"https://ipapi.co/{ip}/json/") as r:
+        d = await r.json()
 
         if d.get("error"):
             await update.message.reply_text(f"❌ Invalid IP address: `{ip}`", parse_mode="Markdown")
