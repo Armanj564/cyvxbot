@@ -1,4 +1,3 @@
-import aiohttp
 import time
 import os
 import socket
