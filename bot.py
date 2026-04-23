@@ -11,7 +11,8 @@ from datetime import datetime, timezone
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 
-BOT_TOKEN = os.environ.get(“BOT_TOKEN”)
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+
 
 SEPARATOR = “━━━━━━━━━━━━━━━━━━━━━━”
 WARNING = “⚠️ *WARNING:* Use only on systems you own or have permission to test. Unauthorized use is illegal.”
