@@ -97,7 +97,7 @@ async def ip_lookup(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"🔍 Investigating `{ip}`...", parse_mode="Markdown")
 
     try:
-        r = requests.get(f"https://ipapi.co/{ip}/json/", timeout=10)
+        r = requests.get(f"http://ip-api.com/json/{ip}", timeout=10)
         d = r.json()
 
         if d.get("error"):
@@ -114,25 +114,20 @@ async def ip_lookup(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         country_flag = d.get("country", "")
         text = (
-            f"{SEPARATOR}\n"
-            f"🌍 *IP INTELLIGENCE REPORT*\n"
-            f"{SEPARATOR}\n\n"
-            f"🎯 IP: `{ip}`\n"
-            f"🌍 Country: `{d.get('country_name', 'N/A')}` {country_flag}\n"
-            f"🏙️ City: `{d.get('city', 'N/A')}`\n"
-            f"📍 Region: `{d.get('region', 'N/A')}`\n"
-            f"🏢 ISP: `{d.get('org', 'N/A')}`\n"
-            f"🌐 ASN: `{d.get('asn', 'N/A')}`\n"
-            f"🕐 Timezone: `{d.get('timezone', 'N/A')}`\n"
-            f"📮 Postal: `{d.get('postal', 'N/A')}`\n"
-            f"🗺️ Coordinates: `{d.get('latitude', 'N/A')}, {d.get('longitude', 'N/A')}`\n\n"
-            f"🔗 *Investigate further:*\n"
-            f"• [Shodan](https://www.shodan.io/host/{ip})\n"
-            f"• [VirusTotal](https://www.virustotal.com/gui/ip-address/{ip})\n"
-            f"• [AbuseIPDB](https://www.abuseipdb.com/check/{ip})\n"
-            f"{SEPARATOR}\n"
-            f"{WARNING}"
-        )
+    f"{SEPARATOR}\n"
+    f"🌍 *IP INTELLIGENCE REPORT*\n"
+    f"{SEPARATOR}\n\n"
+    f"🎯 IP: `{ip}`\n"
+    f"🌍 Country: `{d.get('country', 'N/A')}`\n"
+    f"🏙️ City: `{d.get('city', 'N/A')}`\n"
+    f"📍 Region: `{d.get('regionName', 'N/A')}`\n"
+    f"🏢 ISP: `{d.get('isp', 'N/A')}`\n"
+    f"🌐 ASN: `{d.get('as', 'N/A')}`\n"
+    f"🕐 Timezone: `{d.get('timezone', 'N/A')}`\n"
+    f"🗺️ Coordinates: `{d.get('lat', 'N/A')}, {d.get('lon', 'N/A')}`\n"
+    f"{SEPARATOR}\n{WARNING}"
+)
+
     except Exception as e:
         text = f"❌ Error: `{str(e)}`"
 
